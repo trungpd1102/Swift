@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var alertIsVisible: Bool = false
+
     var body: some View {
         VStack {
             Text("PUT THE BULLEYE AS CLOSE AS YOU CAN! 🎯")
@@ -21,25 +23,32 @@ struct ContentView: View {
                 .kerning(-1)
                 .font(.largeTitle)
                 .fontWeight(.black)
-            
-            HStack{
+
+            HStack {
                 Text("1")
                     .kerning(-1)
                     .bold()
                     .font(.headline)
                     .padding(.horizontal, 30)
-                Slider(value: .constant(50), in: 1.0...100.0)
+                Slider(value: .constant(50), in: 1.0 ... 100.0)
                 Text("100")
                     .kerning(-1)
                     .bold()
                     .font(.headline)
                     .padding(.horizontal, 30)
+            }
 
-                
-            }
-            Button(action: {}){
+            Button(action: {
+                print("Hello SwiftUI")
+                self.alertIsVisible = true
+            }) {
                 Text("Hit Me")
-            }
+            }.padding(6)
+                .alert("Hello there!", isPresented: $alertIsVisible) {
+                    Button("Awesome!") {}
+                } message: {
+                    Text("This is my first pop-up")
+                }
         }
     }
 }
@@ -48,6 +57,5 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
         ContentView()
-        
     }
 }
