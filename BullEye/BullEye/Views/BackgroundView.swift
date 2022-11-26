@@ -15,7 +15,7 @@ struct BackgroundView: View {
             HStack{
                 RoundedImageViewStroked(systemName: "arrow.counterclockwise")
                 Spacer()
-                RoundedImageViewStroked(systemName: "list.dash")
+                RoundedImageViewFilled(systemName: "list.dash")
                 
             }
             .padding(30)

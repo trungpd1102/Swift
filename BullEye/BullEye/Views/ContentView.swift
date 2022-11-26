@@ -29,6 +29,7 @@ struct ContentView: View {
     }
 }
 
+
 struct InstructionView: View{
     @Binding var game: Game
     
@@ -41,15 +42,22 @@ struct InstructionView: View{
     }
 }
 
+
 struct HitMeButton: View {
     @Binding var sliderValue: Double
     @Binding var alertIsVisible: Bool
     @Binding var game: Game
     
+    @State private var points: Int = 0
+    @State private var roundedValue: Int = 0
+    
+    
     var body: some View {
-        Button(action: {
-            print("Hello SwiftUI")
+        Button( action: {
             alertIsVisible = true
+            roundedValue = Int(sliderValue.rounded())
+            points = game.points(sliderValue: roundedValue)
+            
         }) {
             Text("Hit Me".uppercased())
                 .bold()
@@ -65,15 +73,16 @@ struct HitMeButton: View {
         )
         .cornerRadius(21)
         .overlay(RoundedRectangle(cornerRadius: 21)
-        .strokeBorder(Color.white, lineWidth: 2.0))
-        .shadow(color: Color.black.opacity(0.15), radius: 10, x: 4, y: 4)
-        .alert("Hello there!", isPresented: $alertIsVisible) {
-            Button("Awesome!") {}
+            .strokeBorder(Color.white, lineWidth: 2.0))
+        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 4, y: 4)
+        .alert("Hello there!", isPresented: $alertIsVisible
+        ){
+            Button("Awesome!", action: {
+                game.startNewRound(point: points)
+            })
         } message: {
-            let roundedValue = Int(sliderValue.rounded())
-            
             Text("The slider's value is \(roundedValue).\n" +
-                 "You scored \(game.points(sliderValue: roundedValue)) Points\n🎉🎉🎉")
+                 "You scored \(points) Points\n🎉🎉🎉")
         }
     }
 }

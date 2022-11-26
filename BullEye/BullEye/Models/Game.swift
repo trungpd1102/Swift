@@ -24,4 +24,10 @@ struct Game {
             return awardedPoints
         }
     }
+    
+    mutating func startNewRound(point: Int){
+        target = Int.random(in: 1 ... 100)
+        score += point
+        round += 1
+    }
 }
