@@ -27,7 +27,16 @@ struct SliderLabelText: View{
             .kerning(-1)
             .bold()
             .font(.headline)
-            .padding(.horizontal, 20)
+//            .padding(.horizontal, 20)
+            .frame(width: 60)
     }
 }
+
+struct SiderView_Previews: PreviewProvider {
+    static var previews: some View {
+        SiderView(sliderValue: .constant(50.0))
+        
+    }
+}
+
 

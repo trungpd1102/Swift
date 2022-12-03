@@ -31,6 +31,36 @@ struct BigNumberText: View {
     }
 }
 
+struct BodyText: View {
+    var text: String
+    
+    var body: some View{
+        Text(text)
+            .font(.subheadline)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+            .lineSpacing(10)
+
+    }
+}
+
+struct ButtonText: View {
+    var text: String
+    
+    var body: some View{
+        Text(text)
+            .padding()
+            .font(.body)
+            .frame(maxWidth: .infinity)
+            .fontWeight(.bold)
+            .foregroundColor(Color.white)
+            .background(Color("AccentColor"))
+            .cornerRadius(12)
+
+    }
+}
+
+
 struct RoundedTextView: View {
     var title: String
     var value: Int
@@ -61,8 +91,11 @@ struct TextViews_Previews: PreviewProvider
     static var previews: some View {
         VStack{
             InstructionText(text: "PUT THE BULLEYE AS CLOSE AS YOU CAN! 🎯")
-            BigNumberText(target: "999")
             RoundedTextView(title: "score", value: 999)
+            InstructionText(text: "The slider's value is")
+            BigNumberText(target: "999")
+            BodyText(text: "Your score 200 Points\n🎉🎉🎉")
+            ButtonText(text: "Start New Round")
         }
     }
 }

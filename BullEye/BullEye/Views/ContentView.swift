@@ -10,21 +10,30 @@ import SwiftUI
 struct ContentView: View {
     @State private var alertIsVisible: Bool = false
     @State private var sliderValue: Double = 50.0
-    //    @State private var game: Game = .init()
     @State private var game: Game = Game()
     
     var body: some View {
         
         ZStack {
-            BackgroundView(game: $game)
+            BackgroundView(game: $game, sliderValue: $sliderValue)
+            
             VStack {
-                InstructionView(game: $game)
+                InstructionView(game: $game).padding()
                 
-                SiderView(sliderValue: $sliderValue)
+                SiderView(sliderValue: $sliderValue).padding()
+
                 
-                HitMeButton(sliderValue: $sliderValue, alertIsVisible: $alertIsVisible, game: $game)
+                HitMeButton(alertIsVisible: $alertIsVisible).padding()
+
             }
             .foregroundColor(Color("TextColor"))
+            
+            if alertIsVisible{
+                ResultPointsView(sliderValue: $sliderValue,
+                                 game: $game,
+                                 alertIsVisible: $alertIsVisible)
+//                .transition(.opacity)
+            }
         }
     }
 }
@@ -44,20 +53,13 @@ struct InstructionView: View{
 
 
 struct HitMeButton: View {
-    @Binding var sliderValue: Double
     @Binding var alertIsVisible: Bool
-    @Binding var game: Game
-    
-    @State private var points: Int = 0
-    @State private var roundedValue: Int = 0
-    
     
     var body: some View {
         Button( action: {
-            alertIsVisible = true
-            roundedValue = Int(sliderValue.rounded())
-            points = game.points(sliderValue: roundedValue)
-            
+            withAnimation {
+                alertIsVisible = true
+            }
         }) {
             Text("Hit Me".uppercased())
                 .bold()
@@ -75,15 +77,6 @@ struct HitMeButton: View {
         .overlay(RoundedRectangle(cornerRadius: 21)
             .strokeBorder(Color.white, lineWidth: 2.0))
         .shadow(color: Color.black.opacity(0.1), radius: 10, x: 4, y: 4)
-        .alert("Hello there!", isPresented: $alertIsVisible
-        ){
-            Button("Awesome!", action: {
-                game.startNewRound(point: points)
-            })
-        } message: {
-            Text("The slider's value is \(roundedValue).\n" +
-                 "You scored \(points) Points\n🎉🎉🎉")
-        }
     }
 }
 
