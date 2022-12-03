@@ -18,23 +18,43 @@ struct ContentView: View {
             BackgroundView(game: $game, sliderValue: $sliderValue)
             
             VStack {
-                InstructionView(game: $game).padding()
+                InstructionView(game: $game)
+                    .padding(.bottom, alertIsVisible ? 0 : 100)
                 
-                SiderView(sliderValue: $sliderValue).padding()
-
-                
-                HitMeButton(alertIsVisible: $alertIsVisible).padding()
-
+                if alertIsVisible {
+                    ResultPointsView(sliderValue: $sliderValue, game: $game, alertIsVisible: $alertIsVisible)
+                        .transition(.scale)
+                } else {
+                    HitMeButton(alertIsVisible: $alertIsVisible)
+                        .transition(.scale)
+                }
             }
-            .foregroundColor(Color("TextColor"))
             
-            if alertIsVisible{
-                ResultPointsView(sliderValue: $sliderValue,
-                                 game: $game,
-                                 alertIsVisible: $alertIsVisible)
-//                .transition(.opacity)
+            if !alertIsVisible {
+                SliderView(sliderValue: $sliderValue)
+                    .transition(.scale)
             }
         }
+        
+        /** Other alert animation with ZStack*/
+        //        ZStack {
+        //            BackgroundView(game: $game, sliderValue: $sliderValue)
+        //
+        //            VStack {
+        //                InstructionView(game: $game)
+        //
+        //                SliderView(sliderValue: $sliderValue)
+        //
+        //                HitMeButton(alertIsVisible: $alertIsVisible)
+        //
+        //            }
+        //
+        //            if alertIsVisible {
+        //                ResultPointsView(sliderValue: $sliderValue, game: $game, alertIsVisible: $alertIsVisible)
+        //                    .transition(.scale)
+        //            }
+        //        }
+        
     }
 }
 
@@ -44,13 +64,25 @@ struct InstructionView: View{
     
     var body: some View{
         VStack{
-            InstructionText(text: "PUT THE BULLEYE AS CLOSE AS YOU CAN! 🎯")
+            InstructionText(text: "PUT THE BULLSEYE AS CLOSE AS YOU CAN! 🎯")
                 .padding(.horizontal, 30)
             BigNumberText(target: String(game.target))
         }
     }
 }
 
+struct SliderView: View {
+    @Binding var sliderValue: Double
+    
+    var body: some View {
+        HStack {
+            SliderLabelText(labelValue: "1")
+            Slider(value: $sliderValue, in: 1.0 ... 100.0)
+            SliderLabelText(labelValue: "100")
+        }
+        
+    }
+}
 
 struct HitMeButton: View {
     @Binding var alertIsVisible: Bool

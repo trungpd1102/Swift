@@ -19,6 +19,18 @@ struct InstructionText: View {
             .lineSpacing(4.0)    }
 }
 
+struct SliderLabelText: View{
+    var labelValue: String
+
+    var body: some View {
+        Text(labelValue)
+            .kerning(-1)
+            .bold()
+            .font(.headline)
+            .frame(width: 60)
+    }
+}
+
 struct BigNumberText: View {
     var target: String
     

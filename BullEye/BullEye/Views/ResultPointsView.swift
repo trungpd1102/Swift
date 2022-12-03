@@ -18,31 +18,27 @@ struct ResultPointsView: View {
         let roundedValue = Int(sliderValue.rounded())
         let points = game.points(sliderValue: roundedValue)
         
-        ZStack{
-            Color(.gray).opacity(0.25).edgesIgnoringSafeArea(.all)
-            
-            VStack(spacing: 10){
-                InstructionText(text: "The slider's value is")
-                BigNumberText(target: String(roundedValue))
-                BodyText(text: "Your score \(points) Points\n🎉🎉🎉")
-                Button(action: {
-                    game.startNewRound(point: points)
-                    withAnimation {
-                        alertIsVisible = false
-                    }
-                }){
-                    ButtonText(text: "Start New Round")
+        VStack(spacing: 10){
+            InstructionText(text: "The slider's value is")
+            BigNumberText(target: String(roundedValue))
+            BodyText(text: "Your score \(points) Points\n🎉🎉🎉")
+            Button(action: {
+                game.startNewRound(point: points)
+                withAnimation {
+                    alertIsVisible = false
                 }
                 
+            }){
+                ButtonText(text: "Start New Round")
             }
-            .padding()
-            .frame(maxWidth: 300)
-            .background(Color("BackgroundColor"))
-            .cornerRadius(21)
-            .shadow(color: .black.opacity(0.15),radius: 10, x: 5, y: 5)
-//            .transition(.opacity)
+            
         }
-        
+        .padding()
+        .frame(maxWidth: 300)
+        .background(Color("BackgroundColor"))
+        .cornerRadius(21)
+        .shadow(color: .black.opacity(0.15),radius: 10, x: 5, y: 5)
+//        .transition(.scale)
     }
     
 }

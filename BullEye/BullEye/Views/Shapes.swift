@@ -20,7 +20,7 @@ struct Shapes: View {
                 
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.green)
-                    .frame(width: toggleAnimation ? 200 : 100, height: 100)
+                    .frame(width: 200, height: 100)
                     .transition(.scale)
             }
             Ellipse()
